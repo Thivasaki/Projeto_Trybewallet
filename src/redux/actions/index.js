@@ -2,6 +2,7 @@ export const ADD_LOGIN = 'ADD_LOGIN';
 export const ADD_CURRENCIES = 'ADD_CURRENCIES';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
 export const ADD_EXCHANGERATE = 'ADD_EXCHANGERATE';
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
 
 export function addLoginAction(payload) {
   return {
@@ -39,6 +40,13 @@ export const getExchangeRatesAPI = () => async (dispatch) => {
 export function addExpensesAction(payload) {
   return {
     type: ADD_EXPENSES,
+    payload,
+  };
+}
+
+export function deleteExpensesAction(payload) {
+  return {
+    type: DELETE_EXPENSES,
     payload,
   };
 }

@@ -15,6 +15,7 @@ class Header extends Component {
 
   render() {
     const { user, expenses } = this.props;
+    const zero = 0;
     return (
       <div>
         <span data-testid="email-field">
@@ -22,7 +23,7 @@ class Header extends Component {
         </span>
 
         <span data-testid="total-field">
-          { expenses.length === 0 ? 0
+          { expenses.length === 0 ? zero.toFixed(2)
             : (this.handleValue())}
         </span>
 

@@ -31,20 +31,11 @@ class WalletForm extends Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const { dispatch } = this.props;
-    const { id, value, description, currency, method,
-      tag } = this.state;
     await dispatch(getExchangeRatesAPI());
     const { exchangeRates } = this.props;
-    const expenses = {
-      id,
-      value,
-      description,
-      currency,
-      method,
-      tag,
-      exchangeRates,
-    };
-    dispatch(addExpensesAction(expenses));
+    this.setState({ exchangeRates });
+    await dispatch(addExpensesAction(this.state));
+    const { id } = this.state;
     const idPlus = id + 1;
     this.setState({
       id: idPlus,
@@ -58,10 +49,10 @@ class WalletForm extends Component {
 
   render() {
     const { currencies } = this.props;
-    const { value, description, currency, method, tag } = this.state;
+    const { id, value, description, currency, method, tag } = this.state;
 
     return (
-      <form>
+      <form id={ id }>
         <input
           type="number"
           data-testid="value-input"
@@ -131,6 +122,7 @@ class WalletForm extends Component {
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   exchangeRates: state.wallet.exchangeRates,
+  expenses: state.wallet.expenses,
 });
 
 WalletForm.propTypes = {
