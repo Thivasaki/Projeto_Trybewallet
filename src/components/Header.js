@@ -8,10 +8,8 @@ class Header extends Component {
     const curry = expenses.map((e) => e.currency);
     const exRates = curry.map((e, i) => expenses[i].exchangeRates[e].ask);
     const value = expenses.map((e) => e.value);
-    console.log(exRates);
     const finalValue = exRates.map((e, i) => Number(e) * Number(value[i]))
       .reduce((acc, cur) => acc + cur);
-    console.log(finalValue);
     return Math.round(finalValue * 100) / 100;
   };
 
