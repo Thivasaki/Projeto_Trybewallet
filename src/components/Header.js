@@ -10,7 +10,7 @@ class Header extends Component {
     const value = expenses.map((e) => e.value);
     const finalValue = exRates.map((e, i) => Number(e) * Number(value[i]))
       .reduce((acc, cur) => acc + cur);
-    return Math.round(finalValue * 100) / 100;
+    return finalValue.toFixed(2);
   };
 
   render() {

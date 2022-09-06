@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpensesAction } from '../redux/actions';
+import { deleteExpensesAction, startEditExpense,
+  addEditIdExpenseAction } from '../redux/actions';
 
 class Table extends Component {
-  handleClick = (event) => {
+  handleDelete = (event) => {
     const { expenses, dispatch } = this.props;
     const { id } = event.target;
     const deleteExpenses = expenses.filter((e) => e.id !== Number(id));
     dispatch(deleteExpensesAction(deleteExpenses));
+  };
+
+  handleEdit = (event) => {
+    const { dispatch } = this.props;
+    const { id } = event.target;
+    dispatch(startEditExpense());
+    dispatch(addEditIdExpenseAction(id));
   };
 
   render() {
@@ -31,9 +39,9 @@ class Table extends Component {
         <tbody>
           { expenses.length !== 0 && expenses.map((e) => {
             const currencyExRates = e.exchangeRates[e.currency];
-            const convertedValue = Math
-              .round(e.exchangeRates[e.currency].ask * e.value * 100) / 100;
+            const convertedValue = (currencyExRates.ask * e.value).toFixed(2);
             const value = Number(e.value).toFixed(2);
+            const currencyUsed = Number(currencyExRates.ask).toFixed(2);
             return (
               <tr key={ e.id }>
                 <td>{ e.description }</td>
@@ -41,16 +49,23 @@ class Table extends Component {
                 <td>{ e.method }</td>
                 <td>{ value }</td>
                 <td>{ currencyExRates.name }</td>
-                <td>{ Math.round(currencyExRates.ask * 100) / 100 }</td>
+                <td>{ currencyUsed }</td>
                 <td>{ convertedValue }</td>
                 <td>Real</td>
                 <td>
-                  <button type="button">Editar</button>
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                    id={ e.id }
+                    onClick={ (event) => this.handleEdit(event) }
+                  >
+                    Editar
+                  </button>
                   <button
                     type="button"
                     data-testid="delete-btn"
                     id={ e.id }
-                    onClick={ (event) => this.handleClick(event) }
+                    onClick={ (event) => this.handleDelete(event) }
                   >
                     Excluir
                   </button>

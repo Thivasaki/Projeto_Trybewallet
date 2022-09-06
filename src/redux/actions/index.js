@@ -3,6 +3,9 @@ export const ADD_CURRENCIES = 'ADD_CURRENCIES';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
 export const ADD_EXCHANGERATE = 'ADD_EXCHANGERATE';
 export const DELETE_EXPENSES = 'DELETE_EXPENSES';
+export const START_EDIT = 'START_EDIT';
+export const IDTOEDITOR = 'IDTOEDITOR';
+export const END_EDIT = 'END_EDIT';
 
 export function addLoginAction(payload) {
   return {
@@ -47,6 +50,26 @@ export function addExpensesAction(payload) {
 export function deleteExpensesAction(payload) {
   return {
     type: DELETE_EXPENSES,
+    payload,
+  };
+}
+
+export function startEditExpense() {
+  return {
+    type: START_EDIT,
+  };
+}
+
+export function addEditIdExpenseAction(payload) {
+  return {
+    type: IDTOEDITOR,
+    payload,
+  };
+}
+
+export function finalizeEditAction(payload) {
+  return {
+    type: END_EDIT,
     payload,
   };
 }
